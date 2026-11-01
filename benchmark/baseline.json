@@ -1,0 +1,45 @@
+{
+  "upstream": "kurtmckee/feedparser",
+  "version": "6.0.14",
+  "base_commit": "a22c5521cbb109871f1a2318948581901bd47e26",
+  "assets": [
+    "benchmark/bench.py",
+    "benchmark/raw/*.json"
+  ],
+  "environment": {
+    "cpu": "AMD EPYC 7K62 48-Core Processor",
+    "cores": 4,
+    "memory_mb": 3723,
+    "python": "Python 3.12.3",
+    "seed": 7
+  },
+  "bench_cmd": "python benchmark/bench.py /tmp/basepkg baseline --iters 5",
+  "upstream_tests": {
+    "command": "python -m pytest tests -q -p no:cacheprovider",
+    "result": "4297 passed, 8 skipped",
+    "elapsed_s": 6.19
+  },
+  "medians_seconds": {
+    "200": {
+      "median": 0.0049218,
+      "p25": 0.004782853182405233,
+      "p75": 0.0049838058184832335,
+      "rsd_pct": 1.89
+    },
+    "1000": {
+      "median": 0.02402969,
+      "p25": 0.02396943001076579,
+      "p75": 0.024392884224653244,
+      "rsd_pct": 0.92
+    },
+    "4000": {
+      "median": 0.09591555,
+      "p25": 0.09535709675401449,
+      "p75": 0.09752855938859284,
+      "rsd_pct": 1.11
+    }
+  },
+  "rss_kb": 13440,
+  "upstream_version": "6.0.14",
+  "notes": "resolve_relative_uris hotspot over repeated navigation-style relative URIs; warmup 3 per scale, 5 timed samples per scale."
+}

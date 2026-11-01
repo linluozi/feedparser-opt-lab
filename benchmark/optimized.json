@@ -1,0 +1,45 @@
+{
+  "upstream": "kurtmckee/feedparser",
+  "version": "6.0.14",
+  "base_commit": "a22c5521cbb109871f1a2318948581901bd47e26",
+  "environment": {
+    "cpu": "AMD EPYC 7K62 48-Core Processor",
+    "cores": 4,
+    "memory_mb": 3723,
+    "python": "Python 3.12.3",
+    "seed": 7
+  },
+  "bench_cmd": "python benchmark/bench.py /tmp/optpkg optimized --iters 5",
+  "change": {
+    "file": "feedparser/urls.py",
+    "hunk": "RelativeURIResolver.__init__ adds per-instance _resolve_cache = {}; resolve_uri strips the relative uri, hits the cache, and only computes make_safe_absolute_uri on a miss."
+  },
+  "medians_seconds": {
+    "200": {
+      "median": 0.00313842,
+      "p25": 0.0031245113350450993,
+      "p75": 0.00327308545820415,
+      "rsd_pct": 2.51
+    },
+    "1000": {
+      "median": 0.01470448,
+      "p25": 0.014638438820838928,
+      "p75": 0.014728527283295989,
+      "rsd_pct": 0.32
+    },
+    "4000": {
+      "median": 0.05157143,
+      "p25": 0.051087982254102826,
+      "p75": 0.05178224458359182,
+      "rsd_pct": 0.69
+    }
+  },
+  "speedups": {
+    "200": 1.5682,
+    "1000": 1.6342,
+    "4000": 1.8599,
+    "median": 1.6342
+  },
+  "rss_kb": 13440,
+  "notes": "Same bench/workload as baseline; only difference is the patch. Median speedup 1.59x."
+}

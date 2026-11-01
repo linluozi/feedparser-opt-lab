@@ -1,0 +1,23 @@
+diff --git a/feedparser/urls.py b/feedparser/urls.py
+index 26ca125..63fd8d8 100644
+--- a/feedparser/urls.py
++++ b/feedparser/urls.py
+@@ -152,9 +152,17 @@ class RelativeURIResolver(BaseHTMLProcessor):
+     def __init__(self, baseuri, encoding, _type):
+         BaseHTMLProcessor.__init__(self, encoding, _type)
+         self.baseuri = baseuri
++        self._resolve_cache = {}
+ 
+     def resolve_uri(self, uri):
+-        return make_safe_absolute_uri(self.baseuri, uri.strip())
++        uri = uri.strip()
++        cache = self._resolve_cache
++        try:
++            return cache[uri]
++        except KeyError:
++            resolved = make_safe_absolute_uri(self.baseuri, uri)
++            cache[uri] = resolved
++            return resolved
+ 
+     def unknown_starttag(self, tag, attrs):
+         attrs = self.normalize_attrs(attrs)
